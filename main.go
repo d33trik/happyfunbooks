@@ -5,9 +5,9 @@ import "fmt"
 func main() {
 	fmt.Println("Books in stock:")
 
-	book := "'Master and Commander', by Patrick O'Brian"
-	fmt.Println(book)
+	title, author := "Master and Commander", "Patrick O'Brian"
+	fmt.Println(title, "by", author)
 
-	book = "'A Morbid Taste for Bones', by Ellis Peters"
-	fmt.Println(book)
+	title, author = "A Morbid Taste for Bones", "Ellis Peters"
+	fmt.Println(title, "by", author)
 }
