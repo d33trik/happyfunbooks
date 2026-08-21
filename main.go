@@ -9,7 +9,7 @@ type Book struct {
 }
 
 func printBook(b Book) {
-	fmt.Println(b.Title, "by", b.Author, "-", b.Copies, "copies")
+	fmt.Printf("%v, by %v - %v copies\n", b.Title, b.Author, b.Copies)
 }
 
 func main() {
