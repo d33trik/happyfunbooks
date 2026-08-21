@@ -2,16 +2,30 @@ package main
 
 import "fmt"
 
+type Book struct {
+	Title  string
+	Author string
+	Copies int
+}
+
+func printBook(b Book) {
+	fmt.Println(b.Title, "by", b.Author, "-", b.Copies, "copies")
+}
+
 func main() {
 	fmt.Println("Books in stock:")
 
-	title, author, copies := "Master and Commander", "Patrick O'Brian", 17
-	printBook(title, author, copies)
+	book := Book{
+		Title:  "Master and Commander",
+		Author: "Patrick O'Brian",
+		Copies: 17,
+	}
+	printBook(book)
 
-	title, author, copies = "A Morbid Taste for Bones", "Ellis Peters", 42
-	printBook(title, author, copies)
-}
-
-func printBook(title, author string, copies int) {
-	fmt.Println(title, "by", author, "-", copies, "copies")
+	book = Book{
+		Title:  "A Morbid Taste for Bones",
+		Author: "Ellis Peters",
+		Copies: 42,
+	}
+	printBook(book)
 }
