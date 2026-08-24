@@ -8,11 +8,27 @@ type Book struct {
 	Copies int
 }
 
-func printBook(b Book) {
-	fmt.Printf("%v, by %v - %v copies\n", b.Title, b.Author, b.Copies)
+func BookToString(b Book) string {
+	return ""
+}
+
+func TestBookToString_FormatsBookInfoAsString() {
+	input := Book{
+		Title:  "Sea Room",
+		Author: "Adam Nicolson",
+		Copies: 2,
+	}
+
+	want := "Sea Room, by Adam Nicolson - 2 copies"
+	got := BookToString(input)
+	if want != got {
+		panic("BookToString: wrong result")
+	}
 }
 
 func main() {
+	TestBookToString_FormatsBookInfoAsString()
+
 	fmt.Println("Books in stock:")
 
 	book := Book{
@@ -20,12 +36,12 @@ func main() {
 		Author: "Patrick O'Brian",
 		Copies: 17,
 	}
-	printBook(book)
+	fmt.Println(BookToString(book))
 
 	book = Book{
 		Title:  "A Morbid Taste for Bones",
 		Author: "Ellis Peters",
 		Copies: 42,
 	}
-	printBook(book)
+	fmt.Println(BookToString(book))
 }
