@@ -8,6 +8,7 @@ import (
 )
 
 func TestBookToString_FormatsBookInfoAsString(t *testing.T) {
+	t.Parallel()
 	input := happyfunbooks.Book{
 		Title:  "Sea Room",
 		Author: "Adam Nicolson",
@@ -22,6 +23,7 @@ func TestBookToString_FormatsBookInfoAsString(t *testing.T) {
 }
 
 func TestGetAllBooks_RetrunsAllBooks(t *testing.T) {
+	t.Parallel()
 	want := []happyfunbooks.Book{
 		{
 			ID:     "abc",
@@ -43,6 +45,7 @@ func TestGetAllBooks_RetrunsAllBooks(t *testing.T) {
 }
 
 func TestGetBook_FindBooksInCatalogByID(t *testing.T) {
+	t.Parallel()
 	want := happyfunbooks.Book{
 		ID:     "abc",
 		Title:  "In the Company of Cheerful Ladies",
@@ -59,6 +62,7 @@ func TestGetBook_FindBooksInCatalogByID(t *testing.T) {
 }
 
 func TestGetBook_ReturnFalseWhenBookNotFound(t *testing.T) {
+	t.Parallel()
 	_, ok := happyfunbooks.GetBook("nonexistent ID")
 	if ok {
 		t.Fatal("want false for nonexistent ID, got true")
