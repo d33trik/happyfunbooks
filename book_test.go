@@ -24,11 +24,13 @@ func TestBookToString_FormatsBookInfoAsString(t *testing.T) {
 func TestGetAllBooks_RetrunsAllBooks(t *testing.T) {
 	want := []happyfunbooks.Book{
 		{
+			ID:     "abc",
 			Title:  "In the Company of Cheerful Ladies",
 			Author: "Alexander McCall Smith",
 			Copies: 1,
 		},
 		{
+			ID:     "xyz",
 			Title:  "White Heat",
 			Author: "Dominic Sandbrook",
 			Copies: 2,
@@ -37,5 +39,28 @@ func TestGetAllBooks_RetrunsAllBooks(t *testing.T) {
 	got := happyfunbooks.GetAllBooks()
 	if !slices.Equal(want, got) {
 		t.Fatalf("want: %#v, got: %#v", want, got)
+	}
+}
+
+func TestGetBook_FindBooksInCatalogByID(t *testing.T) {
+	want := happyfunbooks.Book{
+		ID:     "abc",
+		Title:  "In the Company of Cheerful Ladies",
+		Author: "Alexander McCall Smith",
+		Copies: 1,
+	}
+	got, ok := happyfunbooks.GetBook("abc")
+	if !ok {
+		t.Fatal("book not found")
+	}
+	if want != got {
+		t.Fatalf("want: %#v, got: %#v", want, got)
+	}
+}
+
+func TestGetBook_ReturnFalseWhenBookNotFound(t *testing.T) {
+	_, ok := happyfunbooks.GetBook("nonexistent ID")
+	if ok {
+		t.Fatal("want false for nonexistent ID, got true")
 	}
 }
