@@ -1,6 +1,10 @@
 package happyfunbooks
 
-import "fmt"
+import (
+	"fmt"
+	"maps"
+	"slices"
+)
 
 type Book struct {
 	ID     string
@@ -9,14 +13,14 @@ type Book struct {
 	Copies int
 }
 
-var catalog = []Book{
-	{
+var catalog = map[string]Book{
+	"abc": {
 		ID:     "abc",
 		Title:  "In the Company of Cheerful Ladies",
 		Author: "Alexander McCall Smith",
 		Copies: 1,
 	},
-	{
+	"xyz": {
 		ID:     "xyz",
 		Title:  "White Heat",
 		Author: "Dominic Sandbrook",
@@ -29,14 +33,10 @@ func BookToString(b Book) string {
 }
 
 func GetAllBooks() []Book {
-	return catalog
+	return slices.Collect(maps.Values(catalog))
 }
 
 func GetBook(ID string) (Book, bool) {
-	for _, book := range catalog {
-		if book.ID == ID {
-			return book, true
-		}
-	}
-	return Book{}, false
+	book, ok := catalog[ID]
+	return book, ok
 }

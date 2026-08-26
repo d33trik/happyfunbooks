@@ -1,6 +1,7 @@
 package happyfunbooks_test
 
 import (
+	"cmp"
 	"slices"
 	"testing"
 
@@ -39,6 +40,9 @@ func TestGetAllBooks_RetrunsAllBooks(t *testing.T) {
 		},
 	}
 	got := happyfunbooks.GetAllBooks()
+	slices.SortFunc(got, func(a, b happyfunbooks.Book) int {
+		return cmp.Compare(a.Author, b.Author)
+	})
 	if !slices.Equal(want, got) {
 		t.Fatalf("want: %#v, got: %#v", want, got)
 	}
