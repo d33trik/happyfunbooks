@@ -25,6 +25,7 @@ func TestBookToString_FormatsBookInfoAsString(t *testing.T) {
 
 func TestGetAllBooks_RetrunsAllBooks(t *testing.T) {
 	t.Parallel()
+	catalog := getTestCatalog()
 	want := []happyfunbooks.Book{
 		{
 			ID:     "abc",
@@ -39,7 +40,7 @@ func TestGetAllBooks_RetrunsAllBooks(t *testing.T) {
 			Copies: 2,
 		},
 	}
-	got := happyfunbooks.GetAllBooks()
+	got := happyfunbooks.GetAllBooks(catalog)
 	slices.SortFunc(got, func(a, b happyfunbooks.Book) int {
 		return cmp.Compare(a.Author, b.Author)
 	})
@@ -50,13 +51,14 @@ func TestGetAllBooks_RetrunsAllBooks(t *testing.T) {
 
 func TestGetBook_FindBooksInCatalogByID(t *testing.T) {
 	t.Parallel()
+	catalog := getTestCatalog()
 	want := happyfunbooks.Book{
 		ID:     "abc",
 		Title:  "In the Company of Cheerful Ladies",
 		Author: "Alexander McCall Smith",
 		Copies: 1,
 	}
-	got, ok := happyfunbooks.GetBook("abc")
+	got, ok := happyfunbooks.GetBook(catalog, "abc")
 	if !ok {
 		t.Fatal("book not found")
 	}
@@ -67,7 +69,8 @@ func TestGetBook_FindBooksInCatalogByID(t *testing.T) {
 
 func TestGetBook_ReturnFalseWhenBookNotFound(t *testing.T) {
 	t.Parallel()
-	_, ok := happyfunbooks.GetBook("nonexistent ID")
+	catalog := getTestCatalog()
+	_, ok := happyfunbooks.GetBook(catalog, "nonexistent ID")
 	if ok {
 		t.Fatal("want false for nonexistent ID, got true")
 	}
@@ -75,18 +78,36 @@ func TestGetBook_ReturnFalseWhenBookNotFound(t *testing.T) {
 
 func TestAddBook_AddsGivenBookToCatalog(t *testing.T) {
 	t.Parallel()
-	_, ok := happyfunbooks.GetBook("123")
+	catalog := getTestCatalog()
+	_, ok := happyfunbooks.GetBook(catalog, "123")
 	if ok {
 		t.Fatal("book already present")
 	}
-	happyfunbooks.AddBook(happyfunbooks.Book{
+	happyfunbooks.AddBook(catalog, happyfunbooks.Book{
 		ID:     "123",
 		Title:  "The Prize of all the Oceans",
 		Author: "Glyn Williams",
 		Copies: 2,
 	})
-	_, ok = happyfunbooks.GetBook("123")
+	_, ok = happyfunbooks.GetBook(catalog, "123")
 	if !ok {
 		t.Fatal("added book not found")
+	}
+}
+
+func getTestCatalog() map[string]happyfunbooks.Book {
+	return map[string]happyfunbooks.Book{
+		"abc": {
+			ID:     "abc",
+			Title:  "In the Company of Cheerful Ladies",
+			Author: "Alexander McCall Smith",
+			Copies: 1,
+		},
+		"xyz": {
+			ID:     "xyz",
+			Title:  "White Heat",
+			Author: "Dominic Sandbrook",
+			Copies: 2,
+		},
 	}
 }
