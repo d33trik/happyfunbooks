@@ -72,3 +72,21 @@ func TestGetBook_ReturnFalseWhenBookNotFound(t *testing.T) {
 		t.Fatal("want false for nonexistent ID, got true")
 	}
 }
+
+func TestAddBook_AddsGivenBookToCatalog(t *testing.T) {
+	t.Parallel()
+	_, ok := happyfunbooks.GetBook("123")
+	if ok {
+		t.Fatal("book already present")
+	}
+	happyfunbooks.AddBook(happyfunbooks.Book{
+		ID:     "123",
+		Title:  "The Prize of all the Oceans",
+		Author: "Glyn Williams",
+		Copies: 2,
+	})
+	_, ok = happyfunbooks.GetBook("123")
+	if !ok {
+		t.Fatal("added book not found")
+	}
+}

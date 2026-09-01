@@ -40,3 +40,7 @@ func GetBook(ID string) (Book, bool) {
 	book, ok := catalog[ID]
 	return book, ok
 }
+
+func AddBook(book Book) {
+	catalog[book.ID] = book
+}
