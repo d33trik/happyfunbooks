@@ -10,6 +10,6 @@ func main() {
 	catalog := happyfunbooks.GetCatalog()
 	fmt.Println("Books in stock:")
 	for _, book := range happyfunbooks.GetAllBooks(catalog) {
-		fmt.Println(happyfunbooks.BookToString(book))
+		fmt.Println(book)
 	}
 }

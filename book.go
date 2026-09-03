@@ -13,7 +13,7 @@ type Book struct {
 	Copies int
 }
 
-func BookToString(b Book) string {
+func (b Book) String() string {
 	return fmt.Sprintf("%v, by %v (copies: %v)", b.Title, b.Author, b.Copies)
 }
 
