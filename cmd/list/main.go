@@ -9,7 +9,7 @@ import (
 func main() {
 	catalog := happyfunbooks.GetCatalog()
 	fmt.Println("Books in stock:")
-	for _, book := range happyfunbooks.GetAllBooks(catalog) {
+	for _, book := range catalog.GetAllBooks() {
 		fmt.Println(book)
 	}
 }

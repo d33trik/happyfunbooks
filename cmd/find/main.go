@@ -14,7 +14,7 @@ func main() {
 	}
 	ID := os.Args[1]
 	catalog := happyfunbooks.GetCatalog()
-	book, ok := happyfunbooks.GetBook(catalog, ID)
+	book, ok := catalog.GetBook(ID)
 	if !ok {
 		fmt.Println("Soory, I couldn't find that book in the catalog.")
 		return
