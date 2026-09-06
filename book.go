@@ -17,6 +17,10 @@ func (b Book) String() string {
 	return fmt.Sprintf("%v, by %v (copies: %v)", b.Title, b.Author, b.Copies)
 }
 
+func (b *Book) SetCopies(n int) {
+	b.Copies = n
+}
+
 type Catalog map[string]Book
 
 func (c Catalog) GetAllBooks() []Book {
