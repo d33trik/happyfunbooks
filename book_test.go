@@ -134,3 +134,32 @@ func TestSetCopies_ReturnErrorIfCopiesIsNegative(t *testing.T) {
 		t.Error("want error for negative copies, got nil")
 	}
 }
+
+func TestOpenCatalog_LoadsCatalogDataFromFile(t *testing.T) {
+	t.Parallel()
+	catalog, err := happyfunbooks.OpenCatalog("testdata/catalog.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	want := []happyfunbooks.Book{
+		{
+			ID:     "1",
+			Title:  "In the Company of Cheerful Ladies",
+			Author: "Alexander McCall Smith",
+			Copies: 1,
+		},
+		{
+			ID:     "2",
+			Title:  "White Heat",
+			Author: "Dominic Sandbrook",
+			Copies: 2,
+		},
+	}
+	got := catalog.GetAllBooks()
+	slices.SortFunc(got, func(a, b happyfunbooks.Book) int {
+		return cmp.Compare(a.Author, b.Author)
+	})
+	if !slices.Equal(want, got) {
+		t.Fatalf("want: %#v, got: %#v", want, got)
+	}
+}

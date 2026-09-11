@@ -7,7 +7,12 @@ import (
 )
 
 func main() {
-	catalog := happyfunbooks.GetCatalog()
+	catalog, err := happyfunbooks.OpenCatalog("testdata/catalog.json")
+	if err != nil {
+		fmt.Printf("opening catalog: %v\n", err)
+		return
+	}
+
 	fmt.Println("Books in stock:")
 	for _, book := range catalog.GetAllBooks() {
 		fmt.Println(book)

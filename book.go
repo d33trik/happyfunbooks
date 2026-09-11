@@ -1,8 +1,10 @@
 package happyfunbooks
 
 import (
+	"encoding/json"
 	"fmt"
 	"maps"
+	"os"
 	"slices"
 )
 
@@ -40,19 +42,18 @@ func (c Catalog) AddBook(book Book) {
 	c[book.ID] = book
 }
 
-func GetCatalog() Catalog {
-	return Catalog{
-		"abc": {
-			ID:     "abc",
-			Title:  "In the Company of Cheerful Ladies",
-			Author: "Alexander McCall Smith",
-			Copies: 1,
-		},
-		"xyz": {
-			ID:     "xyz",
-			Title:  "White Heat",
-			Author: "Dominic Sandbrook",
-			Copies: 2,
-		},
+func OpenCatalog(path string) (Catalog, error) {
+	file, err := os.Open(path)
+	if err != nil {
+		return nil, err
 	}
+	defer file.Close()
+
+	var catalog Catalog
+	err = json.NewDecoder(file).Decode(&catalog)
+	if err != nil {
+		return nil, err
+	}
+
+	return catalog, nil
 }
